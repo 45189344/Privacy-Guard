@@ -17,6 +17,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { OSWindowHeader } from '@/components/ui/OSWindowHeader';
 
 export const UserDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -138,19 +139,21 @@ export const UserDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Recent Requests Table */}
         <div className="lg:col-span-8">
-          <GlassCard variant="elevated" className="p-6">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-white/10">
-              <h2 className="text-base font-bold text-slate-900 dark:text-white">
-                Recent Deletion Requests
-              </h2>
-              <Link
-                to="/app/requests"
-                className="text-xs font-semibold text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1"
-              >
-                <span>View All ({total})</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+          <div className="rounded-2xl border border-electric-teal/20 bg-midnight-950/70 backdrop-blur-2xl shadow-glass-md overflow-hidden">
+            <OSWindowHeader title="Recent Deletion Requests" subtitle="Tenancy Enclave" badge="LIVE ENCLAVE" />
+            <div className="p-6">
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <h2 className="text-sm font-bold text-white">
+                  Active Requests Ledger
+                </h2>
+                <Link
+                  to="/app/requests"
+                  className="text-xs font-semibold text-electric-teal hover:underline flex items-center gap-1 font-mono"
+                >
+                  <span>View All ({total})</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
 
             {loading ? (
               <div className="py-12 text-center text-xs text-slate-400">Loading requests...</div>
@@ -206,66 +209,67 @@ export const UserDashboard: React.FC = () => {
                 ))}
               </div>
             )}
-          </GlassCard>
+            </div>
+          </div>
         </div>
 
         {/* Status Distribution Visual */}
         <div className="lg:col-span-4">
-          <GlassCard variant="elevated" className="p-6">
-            <h2 className="text-base font-bold text-slate-900 dark:text-white mb-2">
-              Status Breakdown
-            </h2>
-            <p className="text-xs text-slate-400 mb-4">
-              Real-time state distribution for your account
-            </p>
+          <div className="rounded-2xl border border-electric-teal/20 bg-midnight-950/70 backdrop-blur-2xl shadow-glass-md overflow-hidden">
+            <OSWindowHeader title="Status Breakdown" subtitle="Telemetry" badge="STATE" />
+            <div className="p-6">
+              <p className="text-xs text-slate-400 mb-4 font-sans">
+                Real-time state distribution for your account
+              </p>
 
-            {chartData.length > 0 ? (
-              <div className="h-56 relative flex items-center justify-center">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={chartData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={50}
-                      outerRadius={75}
-                      paddingAngle={4}
-                      dataKey="value"
-                    >
-                      {chartData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: 'rgba(8, 16, 35, 0.95)',
-                        border: '1px solid rgba(255,255,255,0.1)',
-                        borderRadius: '12px',
-                        fontSize: '11px',
-                        color: '#fff',
-                      }}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            ) : (
-              <div className="h-48 flex items-center justify-center text-xs text-slate-400">
-                No active metrics yet
-              </div>
-            )}
-
-            <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10 space-y-2 text-xs">
-              {chartData.map((d, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-                    <span className="text-slate-600 dark:text-slate-400">{d.name}</span>
-                  </div>
-                  <span className="font-mono font-bold text-slate-900 dark:text-white">{d.value}</span>
+              {chartData.length > 0 ? (
+                <div className="h-56 relative flex items-center justify-center">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={chartData}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={50}
+                        outerRadius={75}
+                        paddingAngle={4}
+                        dataKey="value"
+                      >
+                        {chartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: 'rgba(5, 12, 30, 0.95)',
+                          border: '1px solid rgba(0, 245, 255, 0.3)',
+                          borderRadius: '12px',
+                          fontSize: '11px',
+                          color: '#fff',
+                        }}
+                      />
+                    </PieChart>
+                  </ResponsiveContainer>
                 </div>
-              ))}
+              ) : (
+                <div className="h-48 flex items-center justify-center text-xs text-slate-400 font-mono">
+                  No active metrics yet
+                </div>
+              )}
+
+              <div className="mt-4 pt-4 border-t border-white/10 space-y-2 text-xs">
+                {chartData.map((d, i) => (
+                  <div key={i} className="flex items-center justify-between font-mono">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
+                      <span className="text-slate-300">{d.name}</span>
+                    </div>
+                    <span className="font-bold text-white">{d.value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </GlassCard>
+          </div>
         </div>
       </div>
     </div>

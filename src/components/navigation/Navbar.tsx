@@ -22,17 +22,17 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="p-2 rounded-xl bg-gradient-to-tr from-teal-600 to-teal-400 text-white shadow-teal-glow transition-transform group-hover:scale-105">
-              <Shield className="w-5 h-5 fill-white/20" />
+            <div className="p-2 rounded-xl bg-gradient-to-tr from-electric-teal to-emerald-neon text-midnight-950 shadow-electric-glow transition-transform group-hover:scale-105">
+              <Shield className="w-5 h-5 fill-midnight-950/20" />
             </div>
             <div>
-              <span className="font-extrabold text-base tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
+              <span className="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
                 PrivacyGuard
-                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-teal-500/15 text-teal-700 dark:text-teal-300 font-semibold border border-teal-500/20">
+                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-electric-teal/15 text-electric-teal font-semibold border border-electric-teal/30">
                   DPDP
                 </span>
               </span>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">
+              <p className="text-[10px] text-slate-400 font-medium -mt-0.5">
                 Your Data. Your Control.
               </p>
             </div>
@@ -148,13 +148,13 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-midnight-800 transition-colors"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-200 hover:text-white hover:bg-white/10 border border-white/10 transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-teal-600 hover:bg-teal-500 text-white shadow-teal-glow transition-all"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-electric-teal to-emerald-neon text-midnight-950 shadow-electric-glow hover:opacity-90 transition-all"
                 >
                   Get Started
                 </Link>

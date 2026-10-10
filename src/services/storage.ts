@@ -404,7 +404,7 @@ export const StorageService = {
     setStorageItem(STORAGE_KEYS.RETENTIONS, SEED_RETENTIONS);
     setStorageItem(STORAGE_KEYS.AUDIT, SEED_AUDIT);
     setStorageItem(STORAGE_KEYS.NOTIFICATIONS, SEED_NOTIFICATIONS);
-    setStorageItem(STORAGE_KEYS.CURRENT_USER, SEED_USERS[0]);
+    localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
   },
 
   // Users
@@ -417,18 +417,30 @@ export const StorageService = {
     return users;
   },
 
-  getCurrentUser(): UserProfile {
-    const current = getStorageItem<UserProfile | null>(STORAGE_KEYS.CURRENT_USER, null);
-    if (!current) {
-      const defaultUser = SEED_USERS[0];
-      setStorageItem(STORAGE_KEYS.CURRENT_USER, defaultUser);
-      return defaultUser;
+  getCurrentUser(): UserProfile | null {
+    try {
+      const sessionUser = sessionStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+      if (sessionUser) {
+        return JSON.parse(sessionUser) as UserProfile;
+      }
+    } catch {
+      // ignore
     }
-    return current;
+    return null;
   },
 
-  setCurrentUser(user: UserProfile): void {
-    setStorageItem(STORAGE_KEYS.CURRENT_USER, user);
+  setCurrentUser(user: UserProfile | null): void {
+    try {
+      if (!user) {
+        sessionStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+        localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
+      } else {
+        sessionStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+        localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+      }
+    } catch (err) {
+      console.error('Storage write error:', err);
+    }
   },
 
   // Requests

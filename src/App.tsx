@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { NotificationProvider } from '@/context/NotificationContext';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
@@ -46,6 +46,21 @@ const AnalyticsPage = lazy(() => import('@/pages/admin/AnalyticsPage').then((m) 
 const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage').then((m) => ({ default: m.AdminUsersPage })));
 const AdminSettingsPage = lazy(() => import('@/pages/admin/AdminSettingsPage').then((m) => ({ default: m.AdminSettingsPage })));
 
+// Root Route Gating: Opening the website always requires login
+function RootEntryGate() {
+  const { isAuthenticated, user, loading } = useAuth();
+  if (loading) {
+    return <LoadingFallback />;
+  }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  if (user?.role === 'dpo_admin' || user?.role === 'auditor') {
+    return <Navigate to="/admin" replace />;
+  }
+  return <Navigate to="/app" replace />;
+}
+
 export function App() {
   return (
     <ThemeProvider>
@@ -54,15 +69,20 @@ export function App() {
           <BrowserRouter>
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
-                {/* Public Routes with PublicLayout */}
+                {/* Entry Route: Always checks login and redirects to OS Login Screen if unauthenticated */}
+                <Route path="/" element={<RootEntryGate />} />
+
+                {/* Standalone OS Lock Screen & Enclave Gate */}
+                <Route path="/login" element={<LoginPage />} />
+
+                {/* Public Informational Routes with PublicLayout */}
                 <Route element={<PublicLayout />}>
-                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/landing" element={<LandingPage />} />
                   <Route path="/features" element={<FeaturesPage />} />
                   <Route path="/how-it-works" element={<HowItWorksPage />} />
                   <Route path="/security" element={<SecurityPage />} />
                   <Route path="/privacy" element={<PrivacyPage />} />
                   <Route path="/terms" element={<TermsPage />} />
-                  <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/forgot-password" element={<ForgotPasswordPage />} />
                   <Route path="/reset-password" element={<ResetPasswordPage />} />

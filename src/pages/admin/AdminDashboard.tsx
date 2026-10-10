@@ -19,6 +19,7 @@ import {
   RefreshCw,
   Search,
 } from 'lucide-react';
+import { OSWindowHeader } from '@/components/ui/OSWindowHeader';
 
 export const AdminDashboard: React.FC = () => {
   const { user } = useAuth();
@@ -184,12 +185,13 @@ export const AdminDashboard: React.FC = () => {
       </GlassCard>
 
       {/* Requests Management Table */}
-      <GlassCard variant="elevated" className="overflow-hidden">
-        <div className="p-5 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
-          <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+      <div className="rounded-2xl border border-electric-teal/20 bg-midnight-950/70 backdrop-blur-2xl shadow-glass-md overflow-hidden">
+        <OSWindowHeader title="DPO Operations Review Queue" subtitle="DPDP Section 8 Deletion Pipeline" badge="PID: 4912" />
+        <div className="p-5 border-b border-white/10 flex items-center justify-between">
+          <h2 className="text-sm font-bold text-white">
             Operational Request Queue ({filteredRequests.length})
           </h2>
-          <span className="text-[11px] text-slate-400">
+          <span className="text-[11px] text-slate-400 font-mono">
             Four-eyes principle active: All state changes are immutably logged
           </span>
         </div>
@@ -259,7 +261,7 @@ export const AdminDashboard: React.FC = () => {
             </table>
           </div>
         )}
-      </GlassCard>
+      </div>
     </div>
   );
 };

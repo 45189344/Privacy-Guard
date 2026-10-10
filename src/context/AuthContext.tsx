@@ -32,26 +32,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
           const { data: { session } } = await supabase.auth.getSession();
           if (session?.user) {
-            // Fetch profile from supabase or fallback to local
             const currentUser = StorageService.getCurrentUser();
             setUser({
-              ...currentUser,
+              ...(currentUser || SEED_USERS[0]),
               id: session.user.id,
-              email: session.user.email || currentUser.email,
+              email: session.user.email || currentUser?.email || '',
             });
             setIsDemoMode(false);
           } else {
-            // Not logged into supabase, use demo default
-            setUser(StorageService.getCurrentUser());
+            setUser(null);
             setIsDemoMode(true);
           }
         } catch {
-          setUser(StorageService.getCurrentUser());
+          setUser(null);
           setIsDemoMode(true);
         }
       } else {
-        // Direct local demonstration mode
-        setUser(StorageService.getCurrentUser());
+        // Local mode: strictly start unauthenticated unless logged in during this active browser session
+        const stored = StorageService.getCurrentUser();
+        setUser(stored);
         setIsDemoMode(true);
       }
       setLoading(false);
@@ -228,10 +227,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await supabase.auth.signOut();
     }
 
-    // Default back to Priya Sharma in demo mode so user can browse
-    const defaultUser = SEED_USERS[0];
-    setUser(defaultUser);
-    StorageService.setCurrentUser(defaultUser);
+    setUser(null);
+    StorageService.setCurrentUser(null);
   };
 
   const switchDemoRole = useCallback((role: UserRole) => {

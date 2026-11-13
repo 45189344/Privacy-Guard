@@ -5,7 +5,7 @@
 
 ---
 
-## 🌟 Architecture & Product Highlights
+## Architecture & Product Highlights
 
 PrivacyGuard combines three complete products into one cohesive system:
 
@@ -34,7 +34,7 @@ PrivacyGuard combines three complete products into one cohesive system:
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technologies |
 |---|---|
@@ -49,7 +49,7 @@ PrivacyGuard combines three complete products into one cohesive system:
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 privacyguard/
@@ -91,7 +91,7 @@ privacyguard/
 
 ---
 
-## 🚀 Quickstart & Development
+#Quickstart & Development
 
 ### 1. Prerequisites
 - Node.js `v20.0.0` or later (`node -v`)
@@ -122,7 +122,7 @@ Typechecks with TypeScript strict mode and compiles code-split bundles into the 
 
 ---
 
-## 🔐 Demonstration Mode & Role Switching
+## Demonstration Mode & Role Switching
 
 PrivacyGuard includes a built-in Demonstration Mode that functions immediately without requiring external database provisioning:
 - **Priya Sharma** (`priya.sharma@example.com`): Standard Data Principal. Submit, track, and challenge personal deletion requests.
@@ -133,7 +133,7 @@ Switch between identities instantly via the top **Demonstration Mode Banner** or
 
 ---
 
-## 🗄️ Supabase Production Configuration
+##  Supabase Production Configuration
 
 To connect a live Supabase project:
 1. Create a `.env` file in the project root:
@@ -147,7 +147,7 @@ To connect a live Supabase project:
 
 ---
 
-## 🛡️ Security Defenses & Threat Model
+## Security Defenses & Threat Model
 
 | Security Vector | Implementation Detail |
 |---|---|
